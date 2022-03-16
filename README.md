@@ -2,6 +2,8 @@
 
 This project was created using React and it's a simple calendar, that displays dates through the months and also allows users to create reminders. This project also used EmotionJS (CSS-in-JS), React Testing Library (JEST), and Redux (as a state controller).
 
+It's available at [Netflify](https://admiring-babbage-602e87.netlify.app/), check it out online!
+
 ## Available Scripts
 
 Here we have some scripts available to run:
