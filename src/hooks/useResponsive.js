@@ -1,11 +1,11 @@
 import { useMediaQuery } from 'react-responsive';
 
 const useResponsive = () => {
-  const xs = useMediaQuery({ query: '(max-width: 576px)' });
-  const sm = useMediaQuery({ query: '(min-width: 577px and max-width: 768px)' });
-  const md = useMediaQuery({ query: '(min-width: 769px and max-width: 960px)' });
-  const lg = useMediaQuery({ query: '(min-width: 961px and max-width: 1024px)' });
-  const xl = useMediaQuery({ query: '(min-width: 1025px)' });
+  const xs = useMediaQuery({ maxDeviceWidth: 576 });
+  const sm = useMediaQuery({ minDeviceWidth: 577, maxDeviceWidth: 768 });
+  const md = useMediaQuery({ minDeviceWidth: 769, maxDeviceWidth: 960 });
+  const lg = useMediaQuery({ minDeviceWidth: 961, maxDeviceWidth: 1024 });
+  const xl = useMediaQuery({ minDeviceWidth: 1025 });
   const isMobile = xs || sm || md;
   const isDesktop = lg || xl;
 

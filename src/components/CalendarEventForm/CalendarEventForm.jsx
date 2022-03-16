@@ -32,10 +32,11 @@ const CalendarEventForm = ({ event, onClose }) => {
   const handleDelete = event => {
     dispatch(deleteEvent(event.id));
     dispatch(resetSelectedEvent());
+    onClose();
   };
 
   return (
-    <StyledEvent>
+    <StyledEvent data-testid="CalendarEventForm">
       <form onSubmit={handleSubmit}>
         <input
           required

@@ -19,7 +19,7 @@ import { faCircle } from '@fortawesome/free-regular-svg-icons';
 /** Reducers */
 import { addNewEvent, resetSelectedEvent, setSelectedEvent } from '../../redux/reducers/calendar';
 
-const CalendarDay = ({ day }) => {
+const CalendarDay = ({ day, ...props }) => {
   const dispatch = useDispatch();
   const { events, selectedEvent, monthIndex } = useSelector(state => state.calendar);
   const { darkMode } = useSelector(state => state.theme);
@@ -57,7 +57,7 @@ const CalendarDay = ({ day }) => {
   };
 
   const isCurrentDay = () => {
-    return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY');
+    return day.format('MM-DD-YY') === dayjs().format('MM-DD-YY');
   };
 
   const isFromAnotherMonth = () => {
@@ -66,15 +66,16 @@ const CalendarDay = ({ day }) => {
 
   return (
     <>
-      <StyledDay id="dayWrapper" onClick={handleNewEvent} isFromAnotherMonth={isFromAnotherMonth()} darkMode={darkMode}>
+      <StyledDay id="dayWrapper" onClick={handleNewEvent} isFromAnotherMonth={isFromAnotherMonth()} darkMode={darkMode} {...props}>
         <StyledDayNumber isCurrentDay={isCurrentDay()} isMobile={isMobile} darkMode={darkMode}>
           {`${day.format('DD')} ${isMobile ? day.format('ddd').toLowerCase() : ''}`}
         </StyledDayNumber>
         <StyledEventsWrapper>
           {events.map(
             event =>
-              dayjs(event.dateTime).format('DD-MM-YY') === day.format('DD-MM-YY') && (
+              dayjs(event.dateTime).format('MM-DD-YY') === day.format('MM-DD-YY') && (
                 <StyledEvent
+                  data-testid={`CalendarEvent-${dayjs(event.dateTime).format('MM-DD')}`}
                   key={event.id}
                   ref={ref => (eventsRefs[event.id] = ref)}
                   labelColor={event.labelColor}
