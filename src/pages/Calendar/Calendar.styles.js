@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const StyledCalendar = styled('div')(({ theme }) => ({
+const StyledCalendar = styled('div')(() => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',

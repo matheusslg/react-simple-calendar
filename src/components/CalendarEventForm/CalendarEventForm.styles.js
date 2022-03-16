@@ -3,14 +3,14 @@ import styled from '@emotion/styled';
 const StyledEvent = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
-  color: theme.colors.gray,
+  color: theme.colors.black,
   width: '100%',
   fontSize: 11,
   padding: 12,
 
   input: {
     border: 'none',
-    backgroundColor: theme.colors.silver,
+    backgroundColor: theme.colors.light,
     borderRadius: 5,
     padding: 8,
     width: '100%',

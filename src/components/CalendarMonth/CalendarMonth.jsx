@@ -1,16 +1,24 @@
 import React from 'react';
 import { nanoid } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
+import dayjs from 'dayjs';
 
 /** Components */
 import CalendarDay from '../CalendarDay';
+
+/** Hooks */
+import useResponsive from '../../hooks/useResponsive';
 
 /** Styles */
 import { StyledMonthWrapper, StyledMonthHeader, StyledMonth, StyledDayName } from './CalendarMonth.styles';
 
 const CalendarMonth = ({ month }) => {
+  const { darkMode } = useSelector(state => state.theme);
+  const { isMobile } = useResponsive();
+
   return (
     <StyledMonthWrapper>
-      <StyledMonthHeader>
+      <StyledMonthHeader isMobile={isMobile}>
         {month.map(
           (row, rowIndex) =>
             rowIndex === 0 && (
@@ -22,11 +30,11 @@ const CalendarMonth = ({ month }) => {
             )
         )}
       </StyledMonthHeader>
-      <StyledMonth>
-        {month.map(row => (
-          <React.Fragment key={nanoid()}>
+      <StyledMonth isMobile={isMobile} darkMode={darkMode}>
+        {month.map((row, index) => (
+          <React.Fragment key={index}>
             {row.map(day => (
-              <CalendarDay day={day} key={nanoid()} />
+              <CalendarDay day={day} key={dayjs(day).format()} />
             ))}
           </React.Fragment>
         ))}

@@ -1,9 +1,8 @@
 import React from 'react';
-import { Global, css } from '@emotion/react';
-import { useSelector } from 'react-redux';
+import { Global, css, useTheme } from '@emotion/react';
 
 const GlobalStyles = () => {
-  const { currentTheme } = useSelector(state => state.theme);
+  const theme = useTheme();
 
   return (
     <Global
@@ -38,7 +37,7 @@ const GlobalStyles = () => {
           font-size: 100%;
           font: inherit;
           vertical-align: baseline;
-          font-family: ${currentTheme.fonts.primary};
+          font-family: ${theme.fonts.primary};
         }
         /* HTML5 display-role reset for older browsers */
         article, aside, details, figcaption, figure, 
@@ -47,6 +46,7 @@ const GlobalStyles = () => {
         }
         body {
           line-height: 1;
+          background-color: ${theme.body.background}
         }
         ol, ul {
           list-style: none;

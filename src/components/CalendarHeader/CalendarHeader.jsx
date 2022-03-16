@@ -4,16 +4,22 @@ import { useDispatch, useSelector } from 'react-redux';
 
 /** Icons */
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faChevronLeft, faChevronRight, faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
+/** Hooks */
+import useResponsive from '../../hooks/useResponsive';
 
 /** Reducers */
 import { setMonthIndex } from '../../redux/reducers/calendar';
+import { toggleDarkMode } from '../../redux/reducers/theme';
 
 /** Styles */
 import { StyledHeader, StyledMonthTitle, StyledControls } from './CalendarHeader.styles';
 
 const CalendarHeader = () => {
   const { monthIndex } = useSelector(state => state.calendar);
+  const { darkMode } = useSelector(state => state.theme);
+  const { isMobile } = useResponsive();
   const dispatch = useDispatch();
 
   const handlePreviousMonth = () => {
@@ -28,10 +34,19 @@ const CalendarHeader = () => {
     dispatch(setMonthIndex(dayjs().month()));
   };
 
+  const handleDarkModeToggle = () => {
+    dispatch(toggleDarkMode());
+  };
+
   return (
-    <StyledHeader>
-      <StyledMonthTitle>{dayjs(new Date(dayjs().year(), monthIndex)).format('MMMM YYYY').toLocaleLowerCase()}</StyledMonthTitle>
+    <StyledHeader isMobile={isMobile}>
+      <StyledMonthTitle darkMode={darkMode}>
+        {dayjs(new Date(dayjs().year(), monthIndex)).format('MMMM YYYY').toLocaleLowerCase()}
+      </StyledMonthTitle>
       <StyledControls>
+        <button type="button" onClick={handleDarkModeToggle}>
+          {!darkMode ? <FontAwesomeIcon icon={faMoon} /> : <FontAwesomeIcon icon={faSun} />}
+        </button>
         <button type="button" onClick={handlePreviousMonth}>
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>

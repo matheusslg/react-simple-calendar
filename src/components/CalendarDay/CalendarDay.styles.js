@@ -1,46 +1,66 @@
 import styled from '@emotion/styled';
 
-const StyledDay = styled('div')(({ theme }) => ({
+const StyledDay = styled('div')(({ theme, darkMode, isFromAnotherMonth }) => ({
   display: 'flex',
   flexDirection: 'column',
-  boxShadow: `inset 0 0 0 1px ${theme.colors.light}`,
+  boxShadow: `inset 0 0 0 0.5px ${theme.colors.silver}`,
   position: 'relative',
-  height: 140,
-  paddingTop: 60,
+  height: 100,
+  paddingTop: 35,
+
+  ...(isFromAnotherMonth && { background: theme.colors.light }),
+
+  ...(darkMode && {
+    boxShadow: `inset 0 0 0 0.5px ${theme.colors.gray}`,
+
+    ...(isFromAnotherMonth && {
+      background: theme.colors.grayLight
+    })
+  })
 }));
 
-const StyledDayNumber = styled('h3')(({ theme, isCurrentDay }) => ({
+const StyledDayNumber = styled('h3')(({ theme, isCurrentDay, isMobile, darkMode }) => ({
   display: 'flex',
   justifyContent: 'center',
   alignItems: 'center',
-  color: theme.colors.primary,
+  color: theme.colors.black,
   fontWeight: 400,
   position: 'absolute',
   borderRadius: '50%',
   margin: 0,
-  top: 12,
-  right: 12,
-  width: 35,
-  height: 35,
+  top: 4,
+  right: 4,
+  width: 30,
+  height: 30,
 
   ...(isCurrentDay && {
     color: theme.colors.light,
-    backgroundColor: `${theme.colors.success}`,
+    backgroundColor: `${theme.colors.danger}`,
   }),
+
+  ...(isMobile && { width: 65, borderRadius: 8 }),
+
+  ...(darkMode && { 
+    color: theme.colors.white,
+
+    ...(isCurrentDay && {
+      color: theme.colors.gray,
+    })
+  })
 }));
 
-const StyledEventsWrapper = styled('div')(({ theme }) => ({
+const StyledEventsWrapper = styled('div')(() => ({
   display: 'flex',
   flexDirection: 'column',
   overflowY: 'auto',
 }));
 
-const StyledEvent = styled('div')(({ theme, selected, labelColor }) => ({
+const StyledEvent = styled('div')(({ theme, selected, labelColor, darkMode }) => ({
   display: 'flex',
   alignItems: 'center',
-  color: theme.colors.gray,
+  color: theme.colors.black,
   fontSize: 11,
-  padding: 6,
+  padding: 3,
   margin: 3,
   borderRadius: 6,
 
@@ -51,7 +71,12 @@ const StyledEvent = styled('div')(({ theme, selected, labelColor }) => ({
 
   ...(labelColor && {
     background: theme.labels[labelColor],
-    ...(labelColor !== 'primary' && { color: theme.colors.gray }),
+    ...(labelColor && labelColor !== 'lightGreen' && { color: theme.colors.light }),
+  }),
+
+  ...(darkMode && {
+    color: theme.colors.white,
+    ...(labelColor && { color: theme.colors.black }),
   }),
 
   svg: {
@@ -63,7 +88,7 @@ const StyledEvent = styled('div')(({ theme, selected, labelColor }) => ({
     display: '-webkit-box',
     WebkitLineClamp: 1,
     WebkitBoxOrient: 'vertical',
-    lineBreak: 'anywhere'
+    lineBreak: 'anywhere',
   },
 
   'span:last-of-type': {

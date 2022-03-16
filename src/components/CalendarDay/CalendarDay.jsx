@@ -21,7 +21,8 @@ import { addNewEvent, resetSelectedEvent, setSelectedEvent } from '../../redux/r
 
 const CalendarDay = ({ day }) => {
   const dispatch = useDispatch();
-  const { events, selectedEvent } = useSelector(state => state.calendar);
+  const { events, selectedEvent, monthIndex } = useSelector(state => state.calendar);
+  const { darkMode } = useSelector(state => state.theme);
   const [anchorEl, setAnchorEl] = useState(null);
   const { isMobile } = useResponsive();
   let eventsRefs = [];
@@ -37,7 +38,7 @@ const CalendarDay = ({ day }) => {
    * Creates a new event when user use double click (desktop) inside a day / mobile is one touch
    */
   const handleNewEvent = e => {
-    if (e.detail === 2 || isMobile) {
+    if (e.detail === 2 || (isMobile && e.target.id === 'dayWrapper')) {
       dispatch(
         addNewEvent({
           dateTime: dayjs(day).hour(dayjs().format('HH')).add(1, 'hour').format(),
@@ -59,10 +60,16 @@ const CalendarDay = ({ day }) => {
     return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY');
   };
 
+  const isFromAnotherMonth = () => {
+    return dayjs(day).format('MM') !== dayjs().month(monthIndex).format('MM');
+  };
+
   return (
     <>
-      <StyledDay onClick={handleNewEvent}>
-        <StyledDayNumber isCurrentDay={isCurrentDay()}>{day.format('DD')}</StyledDayNumber>
+      <StyledDay id="dayWrapper" onClick={handleNewEvent} isFromAnotherMonth={isFromAnotherMonth()} darkMode={darkMode}>
+        <StyledDayNumber isCurrentDay={isCurrentDay()} isMobile={isMobile} darkMode={darkMode}>
+          {`${day.format('DD')} ${isMobile ? day.format('ddd').toLowerCase() : ''}`}
+        </StyledDayNumber>
         <StyledEventsWrapper>
           {events.map(
             event =>
@@ -73,6 +80,7 @@ const CalendarDay = ({ day }) => {
                   labelColor={event.labelColor}
                   selected={selectedEvent.id === event.id}
                   onClick={() => handleSelectEvent(event)}
+                  darkMode={darkMode}
                 >
                   <FontAwesomeIcon icon={faCircle} />
                   <span>{event.name || 'New Event'}</span>
