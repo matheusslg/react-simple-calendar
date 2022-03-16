@@ -1,6 +1,6 @@
 # React Simple Calendar
 
-This project was created using React and it's a simple calendar, displaying dates through the months and also allows user to create reminders. This project also used EmotionJS (CSS-in-JS), React Testing Library (JEST) and Redux (as a state controller).
+This project was created using React and it's a simple calendar, that displays dates through the months and also allows users to create reminders. This project also used EmotionJS (CSS-in-JS), React Testing Library (JEST), and Redux (as a state controller).
 
 ## Available Scripts
 
